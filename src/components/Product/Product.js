@@ -27,7 +27,15 @@ export default function Product() {
           🍦
         </span>
       </div>
-      <button onClick={add}>Add</button> <button>Remove</button>
+      <button onClick={add}>Add</button>
+      <button
+        onClick={() => {
+          setCart([]);
+          setTotal(0);
+        }}
+      >
+        Remove
+      </button>
     </div>
   );
 }
