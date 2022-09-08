@@ -9,14 +9,17 @@ const currencyOption = {
 function cartReducer(state, product) {
     return [...state, product]
 }
+function totalReducer(state, price) {
+    return state + price
+}
 
 export default function Product() {
   const [cart, setCart] = useReducer(cartReducer,[])
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useReducer(totalReducer,0);
 
   function add(product) {
     setCart(product.nome);
-    setTotal(current => current + product.price);
+    setTotal(product.price);
   }
   function getTotal() {
     return total.toLocaleString(undefined, currencyOption);
