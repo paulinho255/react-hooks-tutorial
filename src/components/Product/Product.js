@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import products from "./data";
 import "./Product.css";
 
 const currencyOption = {
@@ -22,20 +23,27 @@ export default function Product() {
     <div className="wrapper">
       <div>Shoppung Cart: {cart.length} total items.</div>
       <div>Total: {getTotal(total)}</div>
-      <div className="product">
-        <span role="img" aria-label="ice-cream">
-          🍦
-        </span>
+
+      <div>
+        {products.map(product => (
+            <div key={product.nome}>
+        <div className="product">
+          <span role="img" aria-label={product.nome}>
+             {product.emoji}            
+          </span>
+        </div>
+        <button onClick={add}>Add</button>
+        <button
+          onClick={() => {
+            setCart([]);
+            setTotal(0);
+          }}
+        >
+          Remove
+        </button>
+            </div>
+        ))}
       </div>
-      <button onClick={add}>Add</button>
-      <button
-        onClick={() => {
-          setCart([]);
-          setTotal(0);
-        }}
-      >
-        Remove
-      </button>
     </div>
   );
 }
