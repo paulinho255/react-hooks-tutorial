@@ -13,5 +13,5 @@ export default [
     emoji: "🍉",
     nome: "watermelon",
     price: 4,
-  },
+  }
 ];

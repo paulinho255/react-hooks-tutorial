@@ -11,9 +11,9 @@ export default function Product() {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
 
-  function add() {
-    setCart(["ice cream"]);
-    setTotal(5);
+  function add(product) {
+    setCart(current => [...current, product.nome]);
+    setTotal(current => current + product.price);
   }
   function getTotal() {
     return total.toLocaleString(undefined, currencyOption);
@@ -32,7 +32,7 @@ export default function Product() {
              {product.emoji}            
           </span>
         </div>
-        <button onClick={add}>Add</button>
+        <button onClick={() => add(product)}>Add</button>
         <button
           onClick={() => {
             setCart([]);
