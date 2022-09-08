@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Product.css";
 
+const currencyOption = {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+};
+
 export default function Product() {
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  function getTotal() {
+    return total.toLocaleString(undefined,currencyOption)
+  }
+  
   return (
-    <div>
-      <div>Shoppung Cart: 0 total items.</div>
-      <div>Total: 0</div>
+    <div className="wrapper">
+      <div>Shoppung Cart: {cart.length} total items.</div>
+      <div>Total: {total}</div>
       <div className="product">
         <span role="img" aria-label="ice-cream">
           🍦
