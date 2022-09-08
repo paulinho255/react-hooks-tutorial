@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import products from "./data";
 import "./Product.css";
 
@@ -6,13 +6,16 @@ const currencyOption = {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 };
+function cartReducer(state, product) {
+    return [...state, product]
+}
 
 export default function Product() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useReducer(cartReducer,[])
   const [total, setTotal] = useState(0);
 
   function add(product) {
-    setCart(current => [...current, product.nome]);
+    setCart(product.nome);
     setTotal(current => current + product.price);
   }
   function getTotal() {
