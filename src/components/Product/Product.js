@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import products from "./data";
 import "./Product.css";
 
@@ -9,47 +9,42 @@ const currencyOption = {
 function cartReducer(state, action) {
   switch (action.type) {
     case "add":
-      return [...state, action.nome];
+      return [...state, action.product];
     case "remove":
+      const productIndex = state.findIndex(
+        (item) => item.nome === action.product.nome
+      );
+      if (productIndex < 0) {
+        return state;
+      }
       const update = [...state];
-      update.splice(update.indexOf(action.nome), 1);
+      update.splice(productIndex,1);
       return update;
     default:
       return state;
   }
 }
-
-function totalReducer(state, action) {
-  if (action.type === "add") {
-    return state + action.price;
-  }
-  return state - action.price;
+function getTotal(cart) {
+  const total = cart.reduce((totalCost, item) => totalCost + item.price, 0);
+  return total.toLocaleString(undefined, currencyOption);
 }
 
 export default function Product() {
   const [cart, setCart] = useReducer(cartReducer, []);
-  const [total, setTotal] = useReducer(totalReducer, 0);
-
+  
   function add(product) {
-    const { nome, price } = product;
-    setCart({ nome, type: "add" });
-    setTotal({ price, type: "add" });
+    setCart({ product, type: "add" });
   }
 
   function remove(product) {
-    const { nome, price } = product;
-    setCart({ nome, type: "remove" });
-    setTotal({ price, type: "remove" });
+    setCart({ product, type: "remove" });
   }
 
-  function getTotal() {
-    return total.toLocaleString(undefined, currencyOption);
-  }
 
   return (
     <div className="wrapper">
       <div>Shoppung Cart: {cart.length} total items.</div>
-      <div>Total: {getTotal(total)}</div>
+      <div>Total: {getTotal(cart)}</div>
 
       <div>
         {products.map((product) => (
@@ -62,7 +57,7 @@ export default function Product() {
             <button onClick={() => add(product)}>Add</button>
             <button
               onClick={() => {
-                remove(product)
+                remove(product);
               }}
             >
               Remove
